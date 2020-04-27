@@ -3,6 +3,7 @@
 #include <inttypes.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 #include "stats.h"
 #include "zmalloc.h"
@@ -104,4 +105,21 @@ uint64_t stats_value_at(stats *stats, uint64_t index, uint64_t *count) {
         }
     }
     return 0;
+}
+
+
+
+bool stats_dump(stats* stats, const char* file_path) {
+    FILE* fd = fopen(file_path, 'w+');
+    if(fd == nullptr) {
+        return false;
+    }
+
+        fprintf(fd, "value, count\n");
+    for (uint64_t i = stats->min; i <= stats->max; i++) {
+        fprintf(fd, "%d, %d\n", i, stats->data[i]);
+    }
+    fclose(fd);
+
+    return true;
 }

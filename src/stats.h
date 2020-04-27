@@ -34,6 +34,8 @@ long double stats_stdev(stats *stats, long double);
 long double stats_within_stdev(stats *, long double, long double, uint64_t);
 uint64_t stats_percentile(stats *, long double);
 
+bool stats_dump(stats*, const char*);
+
 uint64_t stats_popcount(stats *);
 uint64_t stats_value_at(stats *stats, uint64_t, uint64_t *);
 

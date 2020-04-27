@@ -196,6 +196,9 @@ int main(int argc, char **argv) {
         script_done(L, statistics.latency, statistics.requests);
     }
 
+    stats_dump(statistics.latency, "latency.csv");
+    stats_dump(statistics.requests, "requests.csv");
+
     return 0;
 }
 
