@@ -109,15 +109,18 @@ uint64_t stats_value_at(stats *stats, uint64_t index, uint64_t *count) {
 
 
 
-bool stats_dump(stats* stats, const char* file_path) {
-    FILE* fd = fopen(file_path, 'w+');
-    if(fd == nullptr) {
+bool stats_dump(stats* stats, const char* file_path, const char* title) {
+    FILE* fd = fopen(file_path, "w+");
+    if(fd == NULL) {
         return false;
     }
+    if(title != NULL)
+        fprintf(fd, "%s\n", title);
+    else
+        fprintf(fd, "index, data\n");
 
-        fprintf(fd, "value, count\n");
     for (uint64_t i = stats->min; i <= stats->max; i++) {
-        fprintf(fd, "%d, %d\n", i, stats->data[i]);
+        fprintf(fd, "%"PRIu64", %"PRIu64"\n", i, stats->data[i]);
     }
     fclose(fd);
 

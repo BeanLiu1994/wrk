@@ -165,6 +165,8 @@ int main(int argc, char **argv) {
     long double req_per_s   = complete   / runtime_s;
     long double bytes_per_s = bytes      / runtime_s;
 
+    stats_dump(statistics.latency, "latency_before_correcting.csv", "latency(us), count");
+
     if (complete / cfg.connections > 0) {
         int64_t interval = runtime_us / (complete / cfg.connections);
         stats_correct(statistics.latency, interval);
@@ -196,8 +198,8 @@ int main(int argc, char **argv) {
         script_done(L, statistics.latency, statistics.requests);
     }
 
-    stats_dump(statistics.latency, "latency.csv");
-    stats_dump(statistics.requests, "requests.csv");
+    stats_dump(statistics.latency, "latency.csv", "latency(us), count");
+    stats_dump(statistics.requests, "requests.csv", "qps, count");
 
     return 0;
 }
